@@ -26,14 +26,12 @@ public class JobController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, int id) {
         // TODO #1 - get the Job with the given ID and pass it into the view
+
         model.addAttribute("name",jobData.findAll().get(id).getName());
         model.addAttribute("employer", jobData.findAll().get(id).getEmployer());
         model.addAttribute("location", jobData.findAll().get(id).getLocation());
         model.addAttribute("position", jobData.findAll().get(id).getPositionType());
         model.addAttribute("skill", jobData.findAll().get(id).getCoreCompetency());
-
-        System.out.println("JC.38.jobData.name = " + jobData.findAll().get(id).getName());
-        System.out.println("JC.43.jobData.size = " + jobData.findAll().size());
 
         return "job-detail";
     }
@@ -41,7 +39,7 @@ public class JobController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new JobForm());
-        model.addAttribute("jobFieldType", JobFieldType.values());
+//        model.addAttribute("jobFieldType", JobFieldType.values());
         return "new-job";
     }
 
@@ -51,16 +49,27 @@ public class JobController {
         // TODO #6 - Validate the JobForm model, and if valid, create a
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
+
         if (errors.hasErrors()) {
             System.out.println("JC.56.hasErrors = " + errors.getAllErrors().toString());
             return "new-job";
         }
-        System.out.println("JC.59.jobForm = " + jobForm + " : " + jobForm.getName() + " : " + jobForm.getEmployerId());
-        Job newJob = new Job();
-        System.out.println("JC.60.newJob = " + newJob.getId());
-        jobData.add(newJob);
         model.addAttribute("jobData", jobData);
-        System.out.println("JC.63.newJob = " + jobData.getEmployers().findById(jobForm.getEmployerId()));
+        jobData.getEmployers().findById(jobForm.getEmployerId());
+        Job newJob = new Job();
+        newJob.setName(jobForm.getName());
+        newJob.setEmployer(jobData.getEmployers().findById(jobForm.getEmployerId()));
+        newJob.setLocation(jobData.getLocations().findById(jobForm.getLocationId()));
+        newJob.setPositionType(jobData.getPositionTypes().findById(jobForm.getPositionTypeId()));
+        newJob.setCoreCompetency(jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
+
+        jobData.add(newJob);
+
+        model.addAttribute("name",newJob.getName());
+        model.addAttribute("employer", newJob.getEmployer());
+        model.addAttribute("location", newJob.getLocation());
+        model.addAttribute("position", newJob.getPositionType());
+        model.addAttribute("skill", newJob.getCoreCompetency());
         return "job-detail";
 
     }

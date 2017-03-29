@@ -27,15 +27,12 @@ public class JobData {
         if (instance == null) {
             instance = new JobData();
         }
-//        System.out.println("JD.30.instance " + instance.jobs);
-
         return instance;
     }
 
     public Job findById(int id) {
         for (Job job : jobs) {
             if (job.getId() == id)
-                System.out.println("JD.37.id = " + job.getId());
                 return job;
         }
 

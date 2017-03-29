@@ -20,15 +20,15 @@
         </tr>
         <tr>
             <td>Location</td>
-            <td th:text="${location}"></td>
+            <td th:field="*{location}" th:text="${location}"></td>
         </tr>
         <tr>
             <td>Position Type</td>
-            <td th:text="${position}"></td>
+            <td th:field="*{position}" th:text="${position}"></td>
         </tr>
         <tr>
             <td>Skill</td>
-            <td th:text="${skill}"></td>
+            <td th:field="*{skill}" th:text="${skill}"></td>
         </tr>
     </table>
 

@@ -17,7 +17,6 @@ public class JobField {
     public JobField(String aValue) {
         this();
         value = aValue;
-//        System.out.println("JF.20 inside JobField constructor " + id + " " + value);
     }
 
     public boolean contains(String value) {
@@ -25,12 +24,10 @@ public class JobField {
     }
 
     public String getValue() {
-//        System.out.println("JF.27.getValue = " + value);
         return value;
     }
 
     public void setValue(String aValue) {
-        System.out.println("JF.31.setValue = " + aValue);
         value = aValue;
     }
 
@@ -39,12 +36,10 @@ public class JobField {
     }
 
     public int getId() {
-//        System.out.println("JF.41.getId = " + id);
         return id;
     }
 
     private void setId(int id) {
-        System.out.println("JF.47.setId = " + id);
         this.id = id;
     }
 
@@ -54,7 +49,6 @@ public class JobField {
         if (o == null || getClass() != o.getClass()) return false;
 
         JobField jobField = (JobField) o;
-        System.out.println("JF.56.jobField.getId() = " + jobField.getId());
         return id == jobField.getId();
     }
 

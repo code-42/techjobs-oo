@@ -42,7 +42,7 @@ public class JobForm {
         */
 
         employers = jobData.getEmployers().findAll();
-
+        System.out.println("JF.45.employers = " + employers.get(employerId).getValue());
     }
 
     public String getName() {

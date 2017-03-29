@@ -37,6 +37,9 @@ public class SearchController {
         } else {
             jobs = jobData.findByColumnAndValue(searchForm.getSearchField(), searchForm.getKeyword());
         }
+        for(Job job : jobs){
+            System.out.println("SC.41.jobs = " + job.getId());
+        }
 
         model.addAttribute("jobs", jobs);
 

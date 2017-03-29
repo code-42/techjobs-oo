@@ -78,6 +78,8 @@ public class JobDataImporter {
 
                 Job newJob = new Job(record.get("name"), emp, loc, posType, coreComp);
 
+//                jobData.add(newJob);
+//                System.out.println("JDI.82.jobData.add(newJob)... " + newJob.getName() + " " + newJob.getEmployer() + " " + newJob.getLocation());
                 jobData.add(newJob);
             }
 

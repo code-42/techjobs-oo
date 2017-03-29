@@ -1,5 +1,7 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.*;
+import org.launchcode.models.data.JobFieldData;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -22,8 +25,15 @@ public class JobController {
     // The detail display for a given Job at URLs like /job?id=17
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, int id) {
-
         // TODO #1 - get the Job with the given ID and pass it into the view
+        model.addAttribute("name",jobData.findAll().get(id).getName());
+        model.addAttribute("employer", jobData.findAll().get(id).getEmployer());
+        model.addAttribute("location", jobData.findAll().get(id).getLocation());
+        model.addAttribute("position", jobData.findAll().get(id).getPositionType());
+        model.addAttribute("skill", jobData.findAll().get(id).getCoreCompetency());
+
+        System.out.println("JC.38.jobData.name = " + jobData.findAll().get(id).getName());
+        System.out.println("JC.43.jobData.size = " + jobData.findAll().size());
 
         return "job-detail";
     }
@@ -31,6 +41,7 @@ public class JobController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new JobForm());
+        model.addAttribute("jobFieldType", JobFieldType.values());
         return "new-job";
     }
 
@@ -40,8 +51,17 @@ public class JobController {
         // TODO #6 - Validate the JobForm model, and if valid, create a
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
-
-        return "";
+        if (errors.hasErrors()) {
+            System.out.println("JC.56.hasErrors = " + errors.getAllErrors().toString());
+            return "new-job";
+        }
+        System.out.println("JC.59.jobForm = " + jobForm + " : " + jobForm.getName() + " : " + jobForm.getEmployerId());
+        Job newJob = new Job();
+        System.out.println("JC.60.newJob = " + newJob.getId());
+        jobData.add(newJob);
+        model.addAttribute("jobData", jobData);
+        System.out.println("JC.63.newJob = " + jobData.getEmployers().findById(jobForm.getEmployerId()));
+        return "job-detail";
 
     }
 }

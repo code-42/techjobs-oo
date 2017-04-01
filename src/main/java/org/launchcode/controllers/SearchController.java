@@ -31,13 +31,11 @@ public class SearchController {
                          @ModelAttribute SearchForm searchForm) {
 
         ArrayList<Job> jobs;
-
         if (searchForm.getSearchField().equals(JobFieldType.ALL)) {
             jobs = jobData.findByValue(searchForm.getKeyword());
         } else {
             jobs = jobData.findByColumnAndValue(searchForm.getSearchField(), searchForm.getKeyword());
         }
-
         model.addAttribute("jobs", jobs);
 
         return "search";

@@ -7,8 +7,7 @@ import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -39,11 +38,11 @@ public class JobController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new JobForm());
-//        model.addAttribute("jobFieldType", JobFieldType.values());
         return "new-job";
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+
+    @RequestMapping(value = "{id}")
     public String add(Model model, @Valid JobForm jobForm, Errors errors) {
 
         // TODO #6 - Validate the JobForm model, and if valid, create a
@@ -51,26 +50,35 @@ public class JobController {
         // redirect to the job detail view for the new Job.
 
         if (errors.hasErrors()) {
-            System.out.println("JC.56.hasErrors = " + errors.getAllErrors().toString());
+            System.out.println("JC.53.hasErrors = " + errors.getAllErrors().toString());
             return "new-job";
         }
-        model.addAttribute("jobData", jobData);
-        jobData.getEmployers().findById(jobForm.getEmployerId());
+
         Job newJob = new Job();
+        int id = newJob.getId()-1;
         newJob.setName(jobForm.getName());
         newJob.setEmployer(jobData.getEmployers().findById(jobForm.getEmployerId()));
         newJob.setLocation(jobData.getLocations().findById(jobForm.getLocationId()));
         newJob.setPositionType(jobData.getPositionTypes().findById(jobForm.getPositionTypeId()));
         newJob.setCoreCompetency(jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
-
         jobData.add(newJob);
 
-        model.addAttribute("name",newJob.getName());
-        model.addAttribute("employer", newJob.getEmployer());
-        model.addAttribute("location", newJob.getLocation());
-        model.addAttribute("position", newJob.getPositionType());
-        model.addAttribute("skill", newJob.getCoreCompetency());
-        return "job-detail";
+        model.addAttribute("name",jobData.findAll().get(id).getName());
+        model.addAttribute("employer", jobData.findAll().get(id).getEmployer());
+        model.addAttribute("location", jobData.findAll().get(id).getLocation());
+        model.addAttribute("position", jobData.findAll().get(id).getPositionType());
+        model.addAttribute("skill", jobData.findAll().get(id).getCoreCompetency());
+
+        if(String.class.isInstance(id)){
+            System.out.println(id + " is String");
+        }
+        if(int.class.isInstance(id)){
+            System.out.println(id + " is int");
+        }
+
+
+        String sid = String.valueOf(id);
+        return "redirect:/job?id="+id;
 
     }
 }

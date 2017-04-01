@@ -37,6 +37,7 @@ public class JobForm {
     @NotNull
     private int positionTypeId;
 
+    private String employer;
     private String location;
     private String coreCompetency;
     private String positionType;
@@ -101,6 +102,14 @@ public class JobForm {
 
     public void setPositionTypeId(int positionTypeId) {
         this.positionTypeId = positionTypeId;
+    }
+
+    public String getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(String employer) {
+        this.employer = employer;
     }
 
     public String getLocation() {

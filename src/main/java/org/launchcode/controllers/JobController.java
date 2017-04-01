@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by LaunchCode
@@ -56,6 +57,7 @@ public class JobController {
 
         Job newJob = new Job();
         int id = newJob.getId()-1;
+
         newJob.setName(jobForm.getName());
         newJob.setEmployer(jobData.getEmployers().findById(jobForm.getEmployerId()));
         newJob.setLocation(jobData.getLocations().findById(jobForm.getLocationId()));
@@ -63,21 +65,12 @@ public class JobController {
         newJob.setCoreCompetency(jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
         jobData.add(newJob);
 
-        model.addAttribute("name",jobData.findAll().get(id).getName());
+        model.addAttribute("name", jobData.findAll().get(id).getName());
         model.addAttribute("employer", jobData.findAll().get(id).getEmployer());
         model.addAttribute("location", jobData.findAll().get(id).getLocation());
         model.addAttribute("position", jobData.findAll().get(id).getPositionType());
         model.addAttribute("skill", jobData.findAll().get(id).getCoreCompetency());
 
-        if(String.class.isInstance(id)){
-            System.out.println(id + " is String");
-        }
-        if(int.class.isInstance(id)){
-            System.out.println(id + " is int");
-        }
-
-
-        String sid = String.valueOf(id);
         return "redirect:/job?id="+id;
 
     }

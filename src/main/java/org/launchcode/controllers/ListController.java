@@ -68,13 +68,6 @@ public class ListController {
 
         model.addAttribute("title", "Jobs with " + column.getName() + ": " + name);
         model.addAttribute("jobs", jobs);
-        for(Job job : jobs) {
-            System.out.println("LC.72.jobs.items = " + jobs.listIterator().next().getId());
-            System.out.println("LC.72.jobs.items = " + jobs.listIterator().next().getName());
-            System.out.println("LC.72.jobs.items = " + jobs.listIterator().next().getEmployer());
-            System.out.println("LC.72.jobs.items = " + jobs.listIterator().next().getLocation());
-            System.out.println("LC.72.jobs.items = " + jobs.listIterator().next().getCoreCompetency());
-        }
         return "list-jobs";
     }
 

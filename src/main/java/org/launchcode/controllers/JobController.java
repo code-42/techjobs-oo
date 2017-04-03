@@ -33,6 +33,7 @@ public class JobController {
         return "job-detail";
     }
 
+    
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new JobForm());

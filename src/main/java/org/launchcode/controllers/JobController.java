@@ -1,17 +1,15 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.*;
-import org.launchcode.models.data.JobFieldData;
-import org.launchcode.models.forms.JobForm;
+import org.launchcode.models.Job;
 import org.launchcode.models.data.JobData;
+import org.launchcode.models.forms.JobForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 /**
  * Created by LaunchCode
@@ -27,12 +25,11 @@ public class JobController {
     public String index(Model model, int id) {
         // TODO #1 - get the Job with the given ID and pass it into the view
 
-        model.addAttribute("name",jobData.findAll().get(id).getName());
-        model.addAttribute("employer", jobData.findAll().get(id).getEmployer());
-        model.addAttribute("location", jobData.findAll().get(id).getLocation());
-        model.addAttribute("position", jobData.findAll().get(id).getPositionType());
-        model.addAttribute("skill", jobData.findAll().get(id).getCoreCompetency());
-
+        model.addAttribute("name",jobData.findById(id).getName());
+        model.addAttribute("employer", jobData.findById(id).getEmployer());
+        model.addAttribute("location", jobData.findById(id).getLocation());
+        model.addAttribute("position", jobData.findById(id).getPositionType());
+        model.addAttribute("skill", jobData.findById(id).getCoreCompetency());
         return "job-detail";
     }
 
@@ -56,7 +53,7 @@ public class JobController {
         }
 
         Job newJob = new Job();
-        int id = newJob.getId()-1;
+        int id = newJob.getId();
 
         newJob.setName(jobForm.getName());
         newJob.setEmployer(jobData.getEmployers().findById(jobForm.getEmployerId()));
@@ -65,11 +62,11 @@ public class JobController {
         newJob.setCoreCompetency(jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
         jobData.add(newJob);
 
-        model.addAttribute("name", jobData.findAll().get(id).getName());
-        model.addAttribute("employer", jobData.findAll().get(id).getEmployer());
-        model.addAttribute("location", jobData.findAll().get(id).getLocation());
-        model.addAttribute("position", jobData.findAll().get(id).getPositionType());
-        model.addAttribute("skill", jobData.findAll().get(id).getCoreCompetency());
+        model.addAttribute("name", jobData.findById(id).getName());
+        model.addAttribute("employer", jobData.findById(id).getEmployer());
+        model.addAttribute("location", jobData.findById(id).getLocation());
+        model.addAttribute("position", jobData.findById(id).getPositionType());
+        model.addAttribute("skill", jobData.findById(id).getCoreCompetency());
 
         return "redirect:/job?id="+id;
 
